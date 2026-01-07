@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 4lippp</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Variabel Global (Tema) --- */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --header-color: #333333;
+            --primary-color: #007bff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --border: 1px solid #e0e0e0;
+            --border-radius: 12px;
+        }
+
+        /* --- Tema Gelap (Dark Mode) --- */
+        body.dark-mode {
+            --bg-color: #121212;
+            --card-color: #1e1e1e;
+            --text-color: #e0e0e0;
+            --header-color: #e0e0e0;
+            --border: 1px solid #333;
+        }
+
+        /* --- Gaya Dasar --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header dan Navigasi --- */
+        header {
+            background-color: var(--card-color);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: var(--border);
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Tautan di Kanan (Tugas dan Toggle) */
+        .right-nav-group {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .right-nav-group li {
+            margin-left: 20px;
+        }
+
+        .right-nav-group a {
+            text-decoration: none;
+            color: var(--header-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .right-nav-group a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Tombol Toggle (Dark Mode & Translate) */
+        .toggle-button {
+            background: none;
+            border: none;
+            color: var(--header-color);
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.2s;
+            padding: 5px;
+        }
+        
+        .toggle-button:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        #translate-toggle i {
+            font-size: 1em;
+        }
+
+
+        /* --- Konten Utama & Kartu --- */
+        main {
+            padding-top: 30px;
+        }
+
+        .card {
+            background-color: var(--card-color);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: var(--border);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        body.dark-mode h2 {
+            border-bottom-color: #333;
+        }
+
+        /* Bagian Tentang Saya */
+        #tentang {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .tentang-konten {
+            flex: 2;
+        }
+
+        .tentang-foto {
+            flex: 1;
+            /* Tambahkan min-height agar kolom ini tetap terlihat */
+            min-height: 100px; 
+            text-align: center;
+        }
+
+        /* Gaya Khusus Gambar Profil (Tidak digunakan) */
+        .tentang-foto img {
+            max-width: 200px; 
+            max-height: 200px;
+            object-fit: cover; 
+            border-radius: 50%;
+            border: 5px solid var(--border);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background-color: #0056b3;
+        }
+
+        /* Bagian Tugas */
+        .proyek-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        /* Styling untuk video responsif */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Rasio 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 20px;
+            color: #888;
+            border-top: var(--border);
+        }
+
+        /* Responsif */
+        @media (max-width: 768px) {
+            #tentang {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body lang="id">
+
+    <header>
+        <nav class="container">
+            <div class="logo">4lippp</div>
+
+            <ul class="right-nav-group">
+                <li><a href="#tentang" data-translate-key="nav-about">Tentang</a></li>
+                <li><a href="#alippp" data-translate-key="nav-task">Tugas</a></li> 
+                
+                <li>
+                    <button id="translate-toggle" class="toggle-button" aria-label="Toggle Translation">
+                        <i class="fas fa-language"></i>
+                    </button>
+                </li>
+                
+                <li>
+                    <button id="dark-mode-toggle" class="toggle-button" aria-label="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section id="tentang" class="card">
+            <div class="tentang-konten">
+                <h2 data-translate-key="about-title">Selamat Datang</h2>
+                <p data-translate-key="about-text">Website ini dibuat untuk tujuan tugas. Website ini hanya menyajikan halaman perkenalan sederhana dan satu entri tugas utama yang dapat Anda lihat di bagian <b>Tugas</b>.</p>
+                <a href="#alippp" class="cta-button" data-translate-key="about-cta">Lihat Tugas</a>
+            </div>
+            <div class="tentang-foto">
+                </div>
+        </section>
+
+        <section id="alippp"> 
+            <h2 data-translate-key="task-title">Tugas Utama</h2> 
+            <div class="proyek-grid">
+                
+                <div class="proyek-item card">
+                    <h3 data-translate-key="task-item-title">Tugas TIK: Vlog</h3>
+                    <div class="video-container">
+                        <iframe 
+                            src="https://www.youtube.com/embed/N7LpNIDCyCA" 
+                            title="Video YouTube" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p data-translate-key="task-item-desc">Membuat tugas video vlog di spega tentang kelas yang saya tempati di kelas 7, 8, 9.</p>
+                </div>
+                
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <p data-translate-key="footer-text">&copy; 2025 | Dibuat oleh 4lippp</p> 
+    </footer>
+
+    <script>
+        // --- DATA TRANSLASI ---
+        const translations = {
+            'en': {
+                'nav-about': 'About',
+                'nav-task': 'Task',
+                'about-title': 'Welcome',
+                'about-text': 'This website was created for assignment purposes. It only presents a simple introduction page and one main assignment entry which you can view in the <b>Task</b> section.', 
+                'about-cta': 'View Task',
+                'task-title': 'Main Assignment',
+                'task-item-title': 'IT Assignment: Vlog',
+                'task-item-desc': 'Creating a vlog video assignment about the classes I attended in grades 7, 8, and 9 at Spega.',
+                'footer-text': '&copy; 2025 | Created by 4lippp'
+            },
+            'id': {
+                'nav-about': 'Tentang',
+                'nav-task': 'Tugas',
+                'about-title': 'Selamat Datang',
+                'about-text': 'Website ini dibuat untuk tujuan tugas. Website ini hanya menyajikan halaman perkenalan sederhana dan satu entri tugas utama yang dapat Anda lihat di bagian <b>Tugas</b>.',
+                'about-cta': 'Lihat Tugas',
+                'task-title': 'Tugas Utama',
+                'task-item-title': 'Tugas TIK: Vlog',
+                'task-item-desc': 'Membuat tugas video vlog di spega tentang kelas yang saya tempati di kelas 7, 8, 9.',
+                'footer-text': '&copy; 2025 | Dibuat oleh 4lippp'
+            }
+        };
+        
+        // --- FUNGSI TRANSLASI ---
+        let currentLang = 'id';
+
+        function translatePage(lang) {
+            currentLang = lang;
+            document.body.lang = lang;
+            
+            // Update teks pada elemen yang memiliki data-translate-key
+            document.querySelectorAll('[data-translate-key]').forEach(element => {
+                const key = element.getAttribute('data-translate-key');
+                if (translations[lang] && translations[lang][key]) {
+                    
+                    if (element.tagName === 'A' && element.classList.contains('cta-button')) {
+                        element.textContent = translations[lang][key];
+                    } else if (element.tagName === 'H2' || element.tagName === 'H3' || element.tagName === 'P') {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update Judul Halaman (TITLE TAG)
+            document.title = 'Tugas 4lippp'; 
+        }
+
+        // --- DARK MODE & TRANSLATE TOGGLE ---
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Dark Mode
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const body = document.body;
+            
+            let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+            function applyDarkMode(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                    darkModeToggle.querySelector('i').classList.add('fa-sun');
+                    localStorage.setItem('darkMode', 'true');
+                } else {
+                    body.classList.remove('dark-mode');
+                    darkModeToggle.querySelector('i').classList.remove('fa-sun');
+                    darkModeToggle.querySelector('i').classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'false');
+                }
+            }
+            
+            applyDarkMode(isDarkMode);
+
+            darkModeToggle.addEventListener('click', () => {
+                isDarkMode = !isDarkMode;
+                applyDarkMode(isDarkMode);
+            });
+            
+            // Translate Toggle
+            const translateToggle = document.getElementById('translate-toggle');
+
+            translateToggle.addEventListener('click', () => {
+                const newLang = currentLang === 'id' ? 'en' : 'id';
+                translatePage(newLang);
+                localStorage.setItem('currentLang', newLang);
+            });
+            
+            // Inisialisasi bahasa (cek dari localStorage atau default ke 'id')
+            const savedLang = localStorage.getItem('currentLang') || 'id';
+            translatePage(savedLang);
+
+        });
+    </script>
+</body>
+</html>
